@@ -1,0 +1,10 @@
+services:
+  elite_dump.var_dumper.cloner:
+    class: Symfony\Component\VarDumper\Cloner\VarCloner
+    public: false
+
+  elite_dump.twig.dump:
+    class: Symfony\Bridge\Twig\Extension\DumpExtension
+    arguments: [ '@elite_dump.var_dumper.cloner' ]
+    tags:
+      - { name: twig.extension, priority: -100 }
