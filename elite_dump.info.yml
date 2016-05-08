@@ -1,0 +1,5 @@
+name: Elite Dump
+type: module
+description: Use Symfony's var dumper component in Twig and elsewhere
+core: 8.x
+package: Development
