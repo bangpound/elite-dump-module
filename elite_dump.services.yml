@@ -1,7 +1,9 @@
 services:
+  elite_dump.var_dumper.html_dumper:
+    class: Symfony\Component\VarDumper\Dumper\HtmlDumper
+
   elite_dump.var_dumper.cloner:
     class: Symfony\Component\VarDumper\Cloner\VarCloner
-    public: false
 
   elite_dump.twig.dump:
     class: Symfony\Bridge\Twig\Extension\DumpExtension
