@@ -1,12 +1,37 @@
 services:
+  elite_dump.var_dumper.cli_dumper:
+    class: Symfony\Component\VarDumper\Dumper\CliDumper
+    arguments: [ ~, 'UTF-8' ]
+
   elite_dump.var_dumper.html_dumper:
     class: Symfony\Component\VarDumper\Dumper\HtmlDumper
 
   elite_dump.var_dumper.cloner:
     class: Symfony\Component\VarDumper\Cloner\VarCloner
+    calls:
+      - [ setMaxItems, [ 2500] ]
+      - [ setMaxString, [ -1 ] ]
 
   elite_dump.twig.dump:
     class: Symfony\Bridge\Twig\Extension\DumpExtension
     arguments: [ '@elite_dump.var_dumper.cloner' ]
     tags:
       - { name: twig.extension, priority: -100 }
+
+  elite_dump.code.twig_extension:
+    class: Symfony\Bridge\Twig\Extension\CodeExtension
+    arguments: [ ~, ~, 'UTF-8' ]
+    tags:
+      - { name: twig.extension }
+
+  elite_dump.data_collector:
+    class: Drupal\elite_dump\DataCollector\DumpDataCollector
+    arguments: [ '@?stopwatch', ~, 'UTF-8', '@request_stack' ]
+    tags:
+      - { name: data_collector, id: dump, template: '@elite_dump/Collector/dump.html.twig', title: 'Dump', priority: 240 }
+
+  elite_dump.listener:
+    class: Symfony\Component\HttpKernel\EventListener\DumpListener
+    arguments: ['@elite_dump.var_dumper.cloner', '@elite_dump.data_collector']
+    tags:
+      - { name: event_subscriber }
