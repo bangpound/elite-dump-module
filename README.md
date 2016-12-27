@@ -12,11 +12,11 @@ In composer.json:
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/caxy/elite-dump-module.git"
+            "url": "https://github.com/bangpound/elite-dump-module.git"
         }
     ],
     "require-dev": {
-        "drupal/elite_dump": "^8.1@dev",
+        "drupal/elite_dump": "^1.0",
     }
 }
 ```
